@@ -17,10 +17,6 @@ function recursiveDeleteCategories(categoryId, categoriesFromState) {
   return categoryList;
 }
 
-function findChildCategories(categoryId, categoryList) {
-  return;
-}
-
 export default function categories(state = {
   isFetching: false,
   categories: {},
