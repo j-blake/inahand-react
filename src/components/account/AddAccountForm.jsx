@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -7,13 +6,13 @@ import {
   InputAdornment,
   TextField,
   Button,
-  withStyles,
+  makeStyles,
 } from '@material-ui/core';
 import classNames from 'classnames';
 
 import AccountService from './AccountService';
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -30,66 +29,46 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-});
+}));
 
-class AddAccountForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      amount: 0,
-      accountName: '',
-    };
-  }
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  handleAddAccount = (e) => {
+export default function AddAccountForm() {
+  const classes = useStyles();
+  const [accountName, setAccountName] = useState('');
+  const [amount, setAmount] = useState(0);
+  const handleAddAccount = (e) => {
     e.preventDefault();
-    AccountService.addNewAccount(this.state);
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { accountName, amount } = this.state;
-    return (
-      <div>
-        <TextField
-          label="Account Name"
-          id="account-name"
-          name="accountName"
-          className={classNames(classes.margin, classes.textField)}
-          value={accountName}
-          onChange={this.handleChange}
+    AccountService.addNewAccount({ accountName, amount });
+  };
+  return (
+    <div>
+      <TextField
+        label="Account Name"
+        id="account-name"
+        name="accountName"
+        className={classNames(classes.margin, classes.textField)}
+        value={accountName}
+        onChange={(e) => setAccountName(e.target.value)}
+      />
+      <FormControl fullWidth className={classes.margin}>
+        <InputLabel htmlFor="starting-balance">Starting Balance</InputLabel>
+        <Input
+          id="starting-balance"
+          name="amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
         />
-        <FormControl fullWidth className={classes.margin}>
-          <InputLabel htmlFor="starting-balance">Starting Balance</InputLabel>
-          <Input
-            id="starting-balance"
-            name="amount"
-            value={amount}
-            onChange={this.handleChange}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          />
-        </FormControl>
-        <div>
-          <Button
-            color="default"
-            className={classes.button}
-            onClick={this.handleAddAccount}
-          >
-            Add Account
-          </Button>
-        </div>
+      </FormControl>
+      <div>
+        <Button
+          color="default"
+          className={classes.button}
+          onClick={handleAddAccount}
+        >
+          Add Account
+        </Button>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-AddAccountForm.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-};
-
-AddAccountForm.defaultProps = {};
-
-export default withStyles(styles)(AddAccountForm);
