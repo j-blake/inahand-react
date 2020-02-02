@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
-import DashboardComponent from './dashboard/Dashboard';
-import Accounts from './account/Account';
-import Transactions from './transactions/Transactions';
-import Users from './users/Users';
-import Settings from './settings/Settings';
-import Categories from './categories/Categories';
+import DashboardComponent from './components/dashboard/Dashboard';
+import Accounts from './components/account/Account';
+import Transactions from './components/transactions/Transactions';
+import Users from './components/users/Users';
+import Settings from './components/settings/Settings';
+import Categories from './components/categories/Categories';
 
 export default function Main(props) {
   const { classes } = props;

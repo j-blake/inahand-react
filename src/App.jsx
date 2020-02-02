@@ -4,8 +4,8 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import './App.css';
 
-import styles from './components/styles';
-import Dashboard from './components/Dashboard';
+import styles from './styles';
+import Dashboard from './Dashboard';
 
 const theme = createMuiTheme({
   palette: {
