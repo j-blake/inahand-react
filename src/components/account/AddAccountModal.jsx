@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Typography, withStyles } from '@material-ui/core';
+import { Modal, Typography, makeStyles } from '@material-ui/core';
 import AddAccountForm from './AddAccountForm';
 
 function getModalStyle() {
@@ -14,7 +14,7 @@ function getModalStyle() {
   };
 }
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
@@ -22,10 +22,11 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
   },
-});
+}));
 
-function AddAccountModal(props) {
-  const { open, onClose, classes } = props;
+export default function AddAccountModal(props) {
+  const { open, onClose } = props;
+  const classes = useStyles();
 
   return (
     <div>
@@ -50,5 +51,3 @@ AddAccountModal.propTypes = {
 AddAccountModal.defaultProps = {
   open: false,
 };
-
-export default withStyles(styles)(AddAccountModal);

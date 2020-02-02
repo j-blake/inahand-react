@@ -99,7 +99,7 @@ function receiveAddNewAccount(json) {
 export function addNewAccount(data) {
   return (dispatch) => {
     dispatch(requestAddNewAccount(data));
-    return fetch('/api/account/add', {
+    return fetch('/api/account', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
