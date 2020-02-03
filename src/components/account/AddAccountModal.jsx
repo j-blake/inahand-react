@@ -14,7 +14,7 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
@@ -44,8 +44,6 @@ export default function AddAccountModal(props) {
 AddAccountModal.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
 };
 
 AddAccountModal.defaultProps = {
