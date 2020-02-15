@@ -1,15 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
   TextField,
   Button,
-  withStyles,
+  makeStyles,
 } from '@material-ui/core';
 import classNames from 'classnames';
 
 import CategoryService from './CategoryService';
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -26,53 +25,35 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-});
+}));
 
-class AddCategoryForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categoryName: '',
-    };
-  }
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  handleAddCategory = (e) => {
+export default function AddCategoryForm(props) {
+  const [categoryName, setCategoryName] = useState('');
+  const classes = useStyles();
+  const handleAddCategory = (e) => {
     e.preventDefault();
-    CategoryService.addNewCategory({ ...this.state, ...this.props });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { categoryName } = this.state;
-    return (
+    CategoryService.addNewCategory({ categoryName, ...props });
+  };
+  return (
+    <>
+      <TextField
+        label="Category Name"
+        id="category-name"
+        name="categoryName"
+        className={classNames(classes.margin, classes.textField)}
+        value={categoryName}
+        onChange={(e) => setCategoryName(e.target.value)}
+      />
       <div>
-        <TextField
-          label="Category Name"
-          id="category-name"
-          name="categoryName"
-          className={classNames(classes.margin, classes.textField)}
-          value={categoryName}
-          onChange={this.handleChange}
-        />
-        <div>
-          <Button
-            color="default"
-            className={classes.button}
-            onClick={this.handleAddCategory}
-          >
-            Add Category
-          </Button>
-        </div>
+        <Button
+          color="default"
+          className={classes.button}
+          onClick={handleAddCategory}
+        >
+          Add Category
+        </Button>
       </div>
-    );
-  }
+    </>
+  );
 }
-
-AddCategoryForm.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AddCategoryForm);
