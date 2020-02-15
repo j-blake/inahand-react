@@ -1,41 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Typography, withStyles } from '@material-ui/core';
+import { Modal, Typography, makeStyles } from '@material-ui/core';
 import AddCategoryForm from './AddCategoryForm';
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const styles = theme => ({
+const top = 50;
+const left = 50;
+const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
   },
-});
+}));
 
-function AddCategoryModal(props) {
+export default function AddCategoryModal(props) {
   const {
     open,
     onClose,
-    classes,
     parentId,
   } = props;
+  const classes = useStyles();
 
   return (
     <div>
       <Modal open={open} onClose={onClose}>
-        <div style={getModalStyle()} className={classes.paper}>
+        <div className={classes.paper}>
           <Typography variant="subtitle1" id="simple-modal-description">
             <AddCategoryForm parentId={parentId} />
           </Typography>
@@ -48,8 +42,6 @@ function AddCategoryModal(props) {
 AddCategoryModal.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
   parentId: PropTypes.string,
 };
 
@@ -58,5 +50,3 @@ AddCategoryModal.defaultProps = {
   parentId: undefined,
   onClose: undefined,
 };
-
-export default withStyles(styles)(AddCategoryModal);

@@ -153,12 +153,11 @@ function deleteCategorySuccess(categoryId) {
 export function deleteCategory(categoryId) {
   return (dispatch) => {
     dispatch(requestDeleteCategory(categoryId));
-    return fetch('/api/category', {
+    return fetch(`api/category/${categoryId}`, {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: categoryId }),
     })
       .then(() => dispatch(deleteCategorySuccess(categoryId)))
       .catch(error => console.log('An error occurred.', error));
