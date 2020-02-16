@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddCategoryModal from './AddCategoryModal';
 import CategoryHeader from './CategoryHeader';
 import CategoryList from './CategoryList';
-import service from './CategoryService';
+import service from '../../services/CategoryService';
 import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({

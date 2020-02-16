@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import classNames from 'classnames';
 
-import CategoryService from './CategoryService';
+import CategoryService from '../../services/CategoryService';
 
 const useStyles = makeStyles((theme) => ({
   root: {

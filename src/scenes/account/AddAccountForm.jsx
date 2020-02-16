@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import classNames from 'classnames';
 
-import AccountService from './AccountService';
+import AccountService from '../../services/AccountService';
 
 const useStyles = makeStyles((theme) => ({
   root: {

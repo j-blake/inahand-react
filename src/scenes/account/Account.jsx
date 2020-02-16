@@ -6,7 +6,7 @@ import * as actions from '../../data/actions/accountActions';
 import AddAccountModal from './AddAccountModal';
 import AccountHeader from './AccountHeader';
 import AccountList from './AccountList';
-import service from './AccountService';
+import service from '../../services/AccountService';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
