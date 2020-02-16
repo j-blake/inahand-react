@@ -107,9 +107,9 @@ export function addNewAccount(data) {
       body: data,
     })
       .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error),
+        (response) => response.json(),
+        (error) => console.log('An error occurred.', error),
       )
-      .then(json => dispatch(receiveAddNewAccount(json)));
+      .then((json) => dispatch(receiveAddNewAccount(json)));
   };
 }

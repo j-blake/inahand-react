@@ -73,11 +73,11 @@ function doFetchCategories() {
     dispatch(requestCategories());
     return fetch('/api/categories')
       .then(
-        data => data.json(),
-        error => console.log('An error occurred.', error),
+        (data) => data.json(),
+        (error) => console.log('An error occurred.', error),
       )
-      .then(json => normalizeData(json))
-      .then(json => dispatch(receiveCategories(json.entities)));
+      .then((json) => normalizeData(json))
+      .then((json) => dispatch(receiveCategories(json.entities)));
   };
 }
 
@@ -128,11 +128,11 @@ export function addNewCategory(data) {
       body: data,
     })
       .then(
-        res => res.json(),
-        error => console.log('An error occurred.', error),
+        (res) => res.json(),
+        (error) => console.log('An error occurred.', error),
       )
-      .then(json => normalizeDatum(json))
-      .then(json => dispatch(receiveAddNewCategory(json.entities)));
+      .then((json) => normalizeDatum(json))
+      .then((json) => dispatch(receiveAddNewCategory(json.entities)));
   };
 }
 
@@ -160,6 +160,6 @@ export function deleteCategory(categoryId) {
       },
     })
       .then(() => dispatch(deleteCategorySuccess(categoryId)))
-      .catch(error => console.log('An error occurred.', error));
+      .catch((error) => console.log('An error occurred.', error));
   };
 }

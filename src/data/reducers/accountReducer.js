@@ -18,39 +18,31 @@ export default function accounts(state = {
 }, action) {
   switch (action.type) {
     case FETCH_ACCOUNTS_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-      });
+      return { ...state, isFetching: true };
     case FETCH_ACCOUNTS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isInvalidated: false,
         accounts: action.accounts,
         receivedAt: action.receivedAt,
-      });
+      };
     case SELECT_ACCOUNT:
       return state;
     case INVALIDATE_ACCOUNTS:
-      return Object.assign({}, state, {
-        isInvalidated: true,
-      });
+      return { ...state, isInvalidated: true };
     case OPEN_ADD_ACCOUNT_MODAL:
-      return Object.assign({}, state, {
-        isAddAccountModalOpen: true,
-      });
+      return { ...state, isAddAccountModalOpen: true };
     case CLOSE_ADD_ACCOUNT_MODAL:
-      return Object.assign({}, state, {
-        isAddAccountModalOpen: false,
-      });
+      return { ...state, isAddAccountModalOpen: false };
     case ADD_NEW_ACCOUNT_REQUEST:
-      return Object.assign({}, state, {
-        // todo need a state here?
-      });
+      return { ...state }; // todo need a state here?
     case ADD_NEW_ACCOUNT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isAddAccountModalOpen: false,
         accounts: [...state.accounts, action.account],
-      });
+      };
     default:
       return state;
   }
