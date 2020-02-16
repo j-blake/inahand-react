@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Typography, makeStyles } from '@material-ui/core';
 import AddAccountForm from './AddAccountForm';
+import * as actions from '../../data/actions/accountActions';
 
 const top = 50;
 const left = 50;
@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddAccountModal(props) {
-  const { onClose } = props;
+export default function AddAccountModal() {
   const open = useSelector((state) => state.account.isAddAccountModalOpen);
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open} onClose={() => dispatch(actions.closeAddAccountModal())}>
         <div className={classes.paper}>
           <Typography variant="subtitle1" id="simple-modal-description">
             <AddAccountForm />
@@ -37,9 +37,3 @@ export default function AddAccountModal(props) {
     </div>
   );
 }
-
-AddAccountModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
-
-AddAccountModal.defaultProps = {};

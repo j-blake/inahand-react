@@ -1,16 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Grid, Typography, Button, makeStyles,
 } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import service from '../../services/AccountService';
+import * as actions from '../../data/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
   button: theme.button,
 }));
 
 export default function AccountHeader() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const receievedAt = new Date(useSelector((state) => state.account.receivedAt))
     .toLocaleTimeString();
@@ -21,7 +22,11 @@ export default function AccountHeader() {
         <Grid item>
           <Typography variant="h4">
             Accounts
-            <Button onClick={() => service.refreshAccounts()} className={classes.button} size="small">
+            <Button
+              onClick={() => dispatch(actions.refreshAccounts())}
+              className={classes.button}
+              size="small"
+            >
               <RefreshIcon />
             </Button>
           </Typography>

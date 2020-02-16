@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {
   List, Paper, Grid, Typography, makeStyles,
 } from '@material-ui/core';
+import useAccounts from '../../hooks/account/useAccounts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AccountList() {
   const classes = useStyles();
-  const accounts = useSelector((state) => state.account.accounts);
+  const accounts = useAccounts();
   return (
     <>
       <List className={classes.root}>

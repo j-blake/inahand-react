@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Fab, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -6,7 +6,6 @@ import * as actions from '../../data/actions/accountActions';
 import AddAccountModal from './AddAccountModal';
 import AccountHeader from './AccountHeader';
 import AccountList from './AccountList';
-import service from '../../services/AccountService';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -17,16 +16,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AccountView() {
-  useEffect(() => {
-    async function fetchData() {
-      await service.refreshAccounts();
-    }
-    fetchData();
-  }, []);
   const dispatch = useDispatch();
   const classes = useStyles();
   return (
-    <div>
+    <>
       <AccountHeader />
       <AccountList />
       <Fab
@@ -37,9 +30,7 @@ export default function AccountView() {
       >
         <AddIcon />
       </Fab>
-      <AddAccountModal
-        onClose={() => dispatch(actions.closeAddAccountModal())}
-      />
-    </div>
+      <AddAccountModal />
+    </>
   );
 }

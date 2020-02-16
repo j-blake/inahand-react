@@ -97,19 +97,23 @@ function receiveAddNewAccount(json) {
 }
 
 export function addNewAccount(data) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(requestAddNewAccount(data));
-    return fetch('/api/account', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    })
-      .then(
-        (response) => response.json(),
-        (error) => console.log('An error occurred.', error),
-      )
-      .then((json) => dispatch(receiveAddNewAccount(json)));
+    try {
+      const response = await fetch('/api/account', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        const json = await response.json();
+        return dispatch(receiveAddNewAccount(json));
+      }
+      return console.log(`Something went wrong. Status code ${response.status} (${response.statusText})`);
+    } catch (error) {
+      return console.log('An error occurred.', error);
+    }
   };
 }
