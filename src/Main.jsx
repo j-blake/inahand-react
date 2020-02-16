@@ -7,7 +7,7 @@ import Accounts from './scenes/account/Account';
 import Transactions from './components/transactions/Transactions';
 import Users from './components/users/Users';
 import Settings from './components/settings/Settings';
-import Categories from './scenes/categories/Categories';
+import Categories from './scenes/category/Category';
 
 export default function Main(props) {
   const { classes } = props;
