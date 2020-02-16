@@ -2,7 +2,7 @@ import React from 'react';
 import {
   List, Paper, Grid, Typography, makeStyles,
 } from '@material-ui/core';
-import useAccounts from '../../hooks/account/useAccounts';
+import useAccounts from '../../hooks/account/useAccount';
 
 const useStyles = makeStyles((theme) => ({
   root: {
