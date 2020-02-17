@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   FormControl,
   InputLabel,
@@ -9,8 +10,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import classNames from 'classnames';
-
-import AccountService from './AccountService';
+import * as actions from '../../data/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,27 +18,31 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   withoutLabel: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
   textField: {
     flexBasis: 200,
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 }));
 
 
 export default function AddAccountForm() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [accountName, setAccountName] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState('');
   const handleAddAccount = (e) => {
     e.preventDefault();
-    AccountService.addNewAccount({ accountName, amount });
+    dispatch(actions.addNewAccount({
+      name: accountName,
+      initialBalance: parseFloat(amount).toFixed(2),
+    }));
   };
   return (
     <div>

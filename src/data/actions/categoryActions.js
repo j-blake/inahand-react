@@ -73,11 +73,11 @@ function doFetchCategories() {
     dispatch(requestCategories());
     return fetch('/api/categories')
       .then(
-        data => data.json(),
-        error => console.log('An error occurred.', error),
+        (data) => data.json(),
+        (error) => console.log('An error occurred.', error),
       )
-      .then(json => normalizeData(json))
-      .then(json => dispatch(receiveCategories(json.entities)));
+      .then((json) => normalizeData(json))
+      .then((json) => dispatch(receiveCategories(json.entities)));
   };
 }
 
@@ -118,21 +118,24 @@ function receiveAddNewCategory(json) {
 }
 
 export function addNewCategory(data) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(requestAddNewCategory(data));
-    return fetch('/api/category', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    })
-      .then(
-        res => res.json(),
-        error => console.log('An error occurred.', error),
-      )
-      .then(json => normalizeDatum(json))
-      .then(json => dispatch(receiveAddNewCategory(json.entities)));
+    try {
+      const response = await fetch('/api/category', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        const json = normalizeDatum(await response.json());
+        return dispatch(receiveAddNewCategory(json.entities));
+      }
+      return console.log(`Something went wrong. Status code ${response.status} (${response.statusText})`);
+    } catch (error) {
+      return console.log('An error occurred.', error);
+    }
   };
 }
 
@@ -153,14 +156,13 @@ function deleteCategorySuccess(categoryId) {
 export function deleteCategory(categoryId) {
   return (dispatch) => {
     dispatch(requestDeleteCategory(categoryId));
-    return fetch('/api/category', {
+    return fetch(`api/category/${categoryId}`, {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: categoryId }),
     })
       .then(() => dispatch(deleteCategorySuccess(categoryId)))
-      .catch(error => console.log('An error occurred.', error));
+      .catch((error) => console.log('An error occurred.', error));
   };
 }

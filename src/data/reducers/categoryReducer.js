@@ -12,7 +12,7 @@ import {
 } from '../actions/categoryActions';
 
 function recursiveDeleteCategories(categoryId, categoriesFromState) {
-  const categoryList = Object.assign({}, categoriesFromState);
+  const categoryList = { ...categoriesFromState };
   delete categoryList[categoryId];
   return categoryList;
 }
@@ -27,49 +27,37 @@ export default function categories(state = {
 }, action) {
   switch (action.type) {
     case FETCH_CATEGORIES_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-      });
+      return { ...state, isFetching: true };
     case FETCH_CATEGORIES_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isInvalidated: false,
         categories: action.categories,
         receivedAt: action.receivedAt,
-      });
+      };
     case SELECT_CATEGORY:
-      return Object.assign({}, state, {
-        activeCategory: action.category,
-      });
+      return { ...state, activeCategory: action.category };
     case INVALIDATE_CATEGORIES:
-      return Object.assign({}, state, {
-        isInvalidated: true,
-      });
+      return { ...state, isInvalidated: true };
     case OPEN_ADD_CATEGORY_MODAL:
-      return Object.assign({}, state, {
-        isAddCategoryModalOpen: true,
-      });
+      return { ...state, isAddCategoryModalOpen: true };
     case CLOSE_ADD_CATEGORY_MODAL:
-      return Object.assign({}, state, {
-        isAddCategoryModalOpen: false,
-      });
+      return { ...state, isAddCategoryModalOpen: false };
     case ADD_NEW_CATEGORY_REQUEST:
-      return Object.assign({}, state, {
-        // todo need a state here?
-      });
+      return { ...state }; // todo need a state here?
     case ADD_NEW_CATEGORY_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isAddCategoryModalOpen: false,
         categories: { ...state.categories, ...action.category },
-      });
+      };
     case DELETE_CATEGORY_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-      });
+      return { ...state, isFetching: true };
     case DELETE_CATEGORY_SUCCESS: {
       // todo recursive delete categories from state
       const updatedCategories = recursiveDeleteCategories(action.categoryId, state.categories);
-      return Object.assign({}, state, { categories: updatedCategories }, { isFetching: false });
+      return { ...state, categories: updatedCategories, isFetching: false };
     }
     default:
       return state;

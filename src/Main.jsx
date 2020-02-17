@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import DashboardComponent from './components/dashboard/Dashboard';
-import Accounts from './components/account/Account';
+import Accounts from './scenes/account/Account';
 import Transactions from './components/transactions/Transactions';
 import Users from './components/users/Users';
 import Settings from './components/settings/Settings';
-import Categories from './components/categories/Categories';
+import Categories from './scenes/category/Category';
 
 export default function Main(props) {
   const { classes } = props;
