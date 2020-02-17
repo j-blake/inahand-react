@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import {
   List,
   Paper,
@@ -12,6 +12,8 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import useCategory from '../../hooks/category/useCategory';
+import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,9 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CategoryList(props) {
-  const { categories, onClickCategory, onClickDelete } = props;
+export default function CategoryList() {
   const classes = useStyles();
+  const categories = useCategory();
+  const dispatch = useDispatch();
   return (
     <>
       <List>
@@ -36,13 +39,13 @@ export default function CategoryList(props) {
             <ListItem
               className={classes.paper}
               button
-              onClick={() => onClickCategory(category._id)}
+              onClick={() => dispatch(actions.selectCategory(category._id))}
             >
               <ListItemText>
                 <Typography variant="body1">{category.name}</Typography>
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={() => onClickDelete(category._id)} aria-label="Delete">
+                <IconButton onClick={() => dispatch(actions.deleteCategory(category._id))} aria-label="Delete">
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -53,16 +56,3 @@ export default function CategoryList(props) {
     </>
   );
 }
-
-CategoryList.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })),
-  onClickCategory: PropTypes.func.isRequired,
-  onClickDelete: PropTypes.func.isRequired,
-};
-
-CategoryList.defaultProps = {
-  categories: [],
-};

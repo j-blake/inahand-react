@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Grid, Typography, makeStyles,
 } from '@material-ui/core';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -16,9 +17,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CategoryHeader(props) {
-  const { onClickBack, previousId, parentName } = props;
+export default function CategoryHeader() {
+  const categories = useSelector((state) => state.category.categories);
+  const parentId = useSelector((state) => state.category.activeCategory) || undefined;
+  const parentName = parentId ? categories[parentId].name : undefined;
+  const previousId = parentId ? categories[parentId].parent : undefined;
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <>
       <Grid container>
@@ -35,7 +40,7 @@ export default function CategoryHeader(props) {
         direction="row"
         alignItems="center"
         component="a"
-        onClick={() => onClickBack(previousId)}
+        onClick={() => dispatch(actions.selectCategory(previousId))}
       >
         <Grid item>
           {parentName ? <ChevronLeft className={classes.icon} /> : ''}
@@ -49,15 +54,3 @@ export default function CategoryHeader(props) {
     </>
   );
 }
-
-CategoryHeader.propTypes = {
-  previousId: PropTypes.string,
-  parentName: PropTypes.string,
-  onClickBack: PropTypes.func,
-};
-
-CategoryHeader.defaultProps = {
-  previousId: undefined,
-  parentName: undefined,
-  onClickBack: undefined,
-};

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TextField,
   Button,
   makeStyles,
 } from '@material-ui/core';
 import classNames from 'classnames';
-
-import CategoryService from '../../services/CategoryService';
+import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +28,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AddCategoryForm(props) {
+export default function AddCategoryForm() {
   const [categoryName, setCategoryName] = useState('');
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const parent = useSelector((state) => state.category.activeCategory) || undefined;
   const handleAddCategory = (e) => {
     e.preventDefault();
-    CategoryService.addNewCategory({ categoryName, ...props });
+    dispatch(actions.addNewCategory({
+      name: categoryName,
+      parent,
+    }));
   };
   return (
     <>

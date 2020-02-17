@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Typography, makeStyles } from '@material-ui/core';
 import AddCategoryForm from './AddCategoryForm';
+import * as actions from '../../data/actions/categoryActions';
 
 const top = 50;
 const left = 50;
@@ -18,17 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddCategoryModal(props) {
-  const {
-    open,
-    onClose,
-    parentId,
-  } = props;
+export default function AddCategoryModal() {
   const classes = useStyles();
+  const parentId = useSelector((state) => state.category.activeCategory) || undefined;
+  const isModalOpen = useSelector((state) => state.category.isAddCategoryModalOpen);
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <Modal open={open} onClose={onClose}>
+      <Modal open={isModalOpen} onClose={() => dispatch(actions.closeAddCategoryModal())}>
         <div className={classes.paper}>
           <Typography variant="subtitle1" id="simple-modal-description">
             <AddCategoryForm parentId={parentId} />
@@ -38,15 +37,3 @@ export default function AddCategoryModal(props) {
     </div>
   );
 }
-
-AddCategoryModal.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func,
-  parentId: PropTypes.string,
-};
-
-AddCategoryModal.defaultProps = {
-  open: false,
-  parentId: undefined,
-  onClose: undefined,
-};
