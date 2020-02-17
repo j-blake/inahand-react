@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit,
-    marginBottom: theme.spacing.unit * 2,
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(2),
     cursor: 'pointer',
   },
 }));

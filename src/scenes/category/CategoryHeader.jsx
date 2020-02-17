@@ -8,7 +8,7 @@ import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     color: theme.palette.text.primary,
   },
   backButton: {
