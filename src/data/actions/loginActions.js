@@ -2,8 +2,8 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export function loginSuccess(response) {
-  return { type: LOGIN_SUCCESS, token: response.token };
+export function loginSuccess(token) {
+  return { type: LOGIN_SUCCESS, token };
 }
 
 export function loginFailure() {
@@ -23,7 +23,9 @@ export function loginRequest(data) {
       body: JSON.stringify({ email, password }),
     });
     if (response.ok) {
-      return dispatch(loginSuccess(await response.json()));
+      const { token } = await response.json();
+      localStorage.setItem(process.env.REACT_APP_JWT_TOKEN, token);
+      return dispatch(loginSuccess(token));
     }
     return dispatch(loginFailure());
   };
