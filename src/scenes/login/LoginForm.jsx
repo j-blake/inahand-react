@@ -5,8 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import * as actions from '../../data/actions/loginActions';
+import useLogin from '../../hooks/login/useLogin';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const login = useLogin();
   return (
     <>
       <form className={classes.form} noValidate>
@@ -46,6 +45,7 @@ export default function LoginForm() {
           name="email"
           autoComplete="email"
           autoFocus
+          type="email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
@@ -70,7 +70,7 @@ export default function LoginForm() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={() => dispatch(actions.loginRequest({ email, password }))}
+          onClick={() => login({ email, password })}
         >
           Sign In
         </Button>
