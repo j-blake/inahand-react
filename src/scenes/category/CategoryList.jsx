@@ -13,7 +13,8 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useCategory from '../../hooks/category/useCategoryList';
-import * as actions from '../../data/actions/categoryActions';
+import { selectCategory } from '../../data/actions/categoryActions';
+import useCategoryDelete from '../../hooks/category/useCategoryDelete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ export default function CategoryList() {
   const classes = useStyles();
   const categories = useCategory();
   const dispatch = useDispatch();
+  const deleteCategory = useCategoryDelete();
   return (
     <>
       <List>
@@ -39,13 +41,13 @@ export default function CategoryList() {
             <ListItem
               className={classes.paper}
               button
-              onClick={() => dispatch(actions.selectCategory(category._id))}
+              onClick={() => dispatch(selectCategory(category._id))}
             >
               <ListItemText>
                 <Typography variant="body1">{category.name}</Typography>
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={() => dispatch(actions.deleteCategory(category._id))} aria-label="Delete">
+                <IconButton onClick={() => deleteCategory(category._id)} aria-label="Delete">
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
