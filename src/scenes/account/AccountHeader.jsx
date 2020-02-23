@@ -4,7 +4,7 @@ import {
   Grid, Typography, Button, makeStyles,
 } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import * as actions from '../../data/actions/accountActions';
+import { invalidateAccounts } from '../../data/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
   button: theme.button,
@@ -23,7 +23,7 @@ export default function AccountHeader() {
           <Typography variant="h4">
             Accounts
             <Button
-              onClick={() => dispatch(actions.refreshAccounts())}
+              onClick={() => dispatch(invalidateAccounts())}
               className={classes.button}
               size="small"
             >

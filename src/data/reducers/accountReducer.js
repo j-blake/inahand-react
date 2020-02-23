@@ -1,6 +1,7 @@
 import {
   FETCH_ACCOUNTS_REQUEST,
   FETCH_ACCOUNTS_SUCCESS,
+  FETCH_ACCOUNTS_FAILURE,
   SELECT_ACCOUNT,
   INVALIDATE_ACCOUNTS,
   ADD_NEW_ACCOUNT_REQUEST,
@@ -13,7 +14,7 @@ export default function accounts(state = {
   isFetching: false,
   accounts: [],
   receivedAt: null,
-  isInvalidated: false,
+  isInvalidated: true,
   isAddAccountModalOpen: false,
 }, action) {
   switch (action.type) {
@@ -26,6 +27,13 @@ export default function accounts(state = {
         isInvalidated: false,
         accounts: action.accounts,
         receivedAt: action.receivedAt,
+      };
+    case FETCH_ACCOUNTS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        isInvalidated: false,
+        accounts: [],
       };
     case SELECT_ACCOUNT:
       return state;
