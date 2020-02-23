@@ -12,7 +12,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import useCategory from '../../hooks/category/useCategory';
+import useCategory from '../../hooks/category/useCategoryList';
 import * as actions from '../../data/actions/categoryActions';
 
 const useStyles = makeStyles((theme) => ({

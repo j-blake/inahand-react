@@ -14,18 +14,6 @@ export const DELETE_CATEGORY_REQUEST = 'DELETE_CATEGORY_REQUEST';
 export const DELETE_CATEGORY_SUCCESS = 'DELETE_CATEGORY_SUCCESS';
 export const DELETE_CATEGORY_FAILURE = 'DELETE_CATEGORY_FAILURE';
 
-const normalizeData = (originalData) => {
-  const parent = new schema.Entity('parents');
-  const category = new schema.Entity('categories', {
-    parent,
-  }, {
-    idAttribute: '_id',
-  });
-  const categorySchema = { categories: [category] };
-  const normalizedData = normalize(originalData, categorySchema);
-  return normalizedData;
-};
-
 const normalizeDatum = (originalData) => {
   const category = new schema.Entity('category', {}, {
     idAttribute: '_id',
@@ -48,6 +36,12 @@ export function requestCategories() {
   };
 }
 
+export function requestFailed() {
+  return {
+    type: FETCH_CATEGORIES_FAILURE,
+  };
+}
+
 export function receiveCategories(entities) {
   return {
     type: FETCH_CATEGORIES_SUCCESS,
@@ -59,34 +53,6 @@ export function receiveCategories(entities) {
 export function invalidateCategories() {
   return {
     type: INVALIDATE_CATEGORIES,
-  };
-}
-
-function shouldFetchCategories(state) {
-  const categoryLength = Object.keys(state.category.categories).length;
-  const { category: { isFetching, isInvalidated } } = state;
-  return (!(categoryLength > 0 || isFetching) || isInvalidated);
-}
-
-function doFetchCategories() {
-  return (dispatch) => {
-    dispatch(requestCategories());
-    return fetch('/api/categories')
-      .then(
-        (data) => data.json(),
-        (error) => console.log('An error occurred.', error),
-      )
-      .then((json) => normalizeData(json))
-      .then((json) => dispatch(receiveCategories(json.entities)));
-  };
-}
-
-export function fetchCategories() {
-  return (dispatch, getState) => {
-    if (shouldFetchCategories(getState())) {
-      return dispatch(doFetchCategories());
-    }
-    return Promise.resolve();
   };
 }
 
