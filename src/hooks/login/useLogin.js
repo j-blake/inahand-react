@@ -10,9 +10,11 @@ export default function useLogin() {
     if (response.ok) {
       const { token } = await response.json();
       localStorage.setItem(process.env.REACT_APP_JWT_TOKEN, token);
-      return dispatch(loginSuccess(token));
+      dispatch(loginSuccess(token));
+      return true;
     }
-    return dispatch(loginFailure());
+    dispatch(loginFailure());
+    return false;
   };
   return loginUser;
 }

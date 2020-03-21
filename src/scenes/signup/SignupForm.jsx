@@ -1,11 +1,8 @@
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React, { useState, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useLogin from '../../hooks/login/useLogin';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,10 +73,6 @@ export default function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           inputRef={passwordRef}
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
         <Button
           type="button"
           fullWidth
@@ -88,22 +81,8 @@ export default function LoginForm() {
           className={classes.submit}
           onClick={() => handleLogin()}
         >
-          Sign In
+          Create your account
         </Button>
-        <Grid container>
-          <Grid item xs>
-            <Button size="small">
-              Forgot password?
-            </Button>
-          </Grid>
-          <Grid item>
-            <Link to="sign-up">
-              <Button size="small">
-                Sign up
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
       </form>
     </>
   );

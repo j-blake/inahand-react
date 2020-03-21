@@ -10,6 +10,7 @@ import Users from './components/users/Users';
 import Settings from './components/settings/Settings';
 import Categories from './scenes/category/Category';
 import Login from './scenes/login/Login';
+import Signup from './scenes/signup/Signup';
 
 export default function Main(props) {
   const { classes } = props;
@@ -24,6 +25,7 @@ export default function Main(props) {
       <Route path="/users" component={isAuthenticated ? Users : Login} />
       <Route path="/categories" component={isAuthenticated ? Categories : Login} />
       <Route path="/settings" component={isAuthenticated ? Settings : Login} />
+      <Route path="/sign-up" component={Signup} />
     </main>
   );
 }

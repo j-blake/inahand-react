@@ -8,11 +8,12 @@ export default function useLogout() {
     dispatch(logoutRequest());
     const response = await logout(data);
     if (response.ok) {
-      localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
-      window.location.href = '/';
-      return dispatch(logoutSuccess());
+      dispatch(logoutSuccess());
+    } else {
+      dispatch(logoutFailure());
     }
-    return dispatch(logoutFailure());
+    localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
+    window.location.href = '/';
   };
   return logoutUser;
 }
