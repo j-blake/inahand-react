@@ -10,6 +10,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom';
 
+import useLogout from './hooks/logout/useLogout';
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -52,6 +54,7 @@ export default function AppBar(props) {
     handleDrawerOpen,
   } = props;
   const classes = useStyles();
+  const logout = useLogout();
   return (
     <MaterialAppBar
       position="absolute"
@@ -80,7 +83,11 @@ export default function AppBar(props) {
             Inahand
           </Link>
         </Typography>
-        <IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="Logout"
+          onClick={() => logout()}
+        >
           <ExitIcon />
           <Typography
             component="span"

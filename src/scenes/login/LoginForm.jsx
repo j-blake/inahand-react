@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import useLogin from '../../hooks/login/useLogin';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,16 @@ export default function LoginForm() {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const login = useLogin();
+  function handleLogin() {
+    setEmail('');
+    emailRef.current.value = '';
+    setPassword('');
+    passwordRef.current.value = '';
+    login({ email, password });
+  }
   return (
     <>
       <form className={classes.form} noValidate>
@@ -47,6 +56,7 @@ export default function LoginForm() {
           autoFocus
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+          inputRef={emailRef}
         />
         <TextField
           variant="outlined"
@@ -59,6 +69,7 @@ export default function LoginForm() {
           id="password"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
+          inputRef={passwordRef}
         />
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
@@ -70,7 +81,7 @@ export default function LoginForm() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={() => login({ email, password })}
+          onClick={() => handleLogin()}
         >
           Sign In
         </Button>
