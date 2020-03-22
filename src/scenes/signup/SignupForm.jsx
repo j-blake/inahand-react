@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import useLogin from '../../hooks/login/useLogin';
+import useSignup from '../../hooks/signup/useSignup';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,20 +27,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm() {
   const classes = useStyles();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
   const history = useHistory();
-  const login = useLogin();
+  const signup = useSignup();
   function handleLogin() {
     setEmail('');
     emailRef.current.value = '';
     setPassword('');
     passwordRef.current.value = '';
-    const isLoggedIn = login({ email, password });
-    if (isLoggedIn) {
-      history.push('/dashboard');
+    setFirstName('');
+    firstNameRef.current.value = '';
+    setLastName('');
+    lastNameRef.current.value = '';
+    const isSignedUp = signup({
+      email,
+      password,
+      firstName,
+      lastName,
+    });
+    if (isSignedUp) {
+      history.push('/');
     }
   }
   return (
@@ -59,6 +72,32 @@ export default function LoginForm() {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           inputRef={emailRef}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="firstName"
+          label="First Name"
+          name="first_name"
+          autoComplete="firstnamae"
+          type="text"
+          onChange={(e) => setFirstName(e.target.value)}
+          inputRef={firstNameRef}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="lastName"
+          label="Last Name"
+          name="last_name"
+          autoComplete="lastName"
+          type="text"
+          onChange={(e) => setLastName(e.target.value)}
+          inputRef={lastNameRef}
         />
         <TextField
           variant="outlined"
