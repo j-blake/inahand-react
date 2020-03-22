@@ -9,6 +9,7 @@ import {
   CLOSE_ADD_CATEGORY_MODAL,
   DELETE_CATEGORY_REQUEST,
   DELETE_CATEGORY_SUCCESS,
+  FETCH_CATEGORIES_FAILURE,
 } from '../actions/categoryActions';
 
 function recursiveDeleteCategories(categoryId, categoriesFromState) {
@@ -22,7 +23,7 @@ export default function categories(state = {
   categories: {},
   activeCategory: null,
   receivedAt: null,
-  isInvalidated: false,
+  isInvalidated: true,
   isAddCategoryModalOpen: false,
 }, action) {
   switch (action.type) {
@@ -35,6 +36,13 @@ export default function categories(state = {
         isInvalidated: false,
         categories: action.categories,
         receivedAt: action.receivedAt,
+      };
+    case FETCH_CATEGORIES_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        isInvalidated: false,
+        categories: {},
       };
     case SELECT_CATEGORY:
       return { ...state, activeCategory: action.category };

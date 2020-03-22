@@ -30,43 +30,15 @@ export function receiveAccounts(accounts) {
   };
 }
 
+export function accountsFailed() {
+  return {
+    type: FETCH_ACCOUNTS_FAILURE,
+  };
+}
+
 export function invalidateAccounts() {
   return {
     type: INVALIDATE_ACCOUNTS,
-  };
-}
-
-function shouldFetchAccounts(state) {
-  const { isFetching, isInvalidated, accounts: { length: accountLength } } = state.account;
-  return !(accountLength > 0 || isFetching) || isInvalidated;
-}
-
-function doFetchAccounts() {
-  return async (dispatch) => {
-    dispatch(requestAccounts());
-    try {
-      const data = await fetch('/api/accounts');
-      const json = await data.json();
-      return dispatch(receiveAccounts(json));
-    } catch (error) {
-      return console.log('An error occurred.', error);
-    }
-  };
-}
-
-export function fetchAccounts() {
-  return (dispatch, getState) => {
-    if (shouldFetchAccounts(getState())) {
-      return dispatch(doFetchAccounts());
-    }
-    return Promise.resolve();
-  };
-}
-
-export function refreshAccounts() {
-  return (dispatch) => {
-    dispatch(invalidateAccounts());
-    return dispatch(fetchAccounts());
   };
 }
 
@@ -82,38 +54,16 @@ export function closeAddAccountModal() {
   };
 }
 
-function requestAddNewAccount(data) {
+export function requestAddNewAccount(data) {
   return {
     type: ADD_NEW_ACCOUNT_REQUEST,
     data,
   };
 }
 
-function receiveAddNewAccount(json) {
+export function receiveAddNewAccount(json) {
   return {
     type: ADD_NEW_ACCOUNT_SUCCESS,
     account: json.account,
-  };
-}
-
-export function addNewAccount(data) {
-  return async (dispatch) => {
-    dispatch(requestAddNewAccount(data));
-    try {
-      const response = await fetch('/api/account', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        const json = await response.json();
-        return dispatch(receiveAddNewAccount(json));
-      }
-      return console.log(`Something went wrong. Status code ${response.status} (${response.statusText})`);
-    } catch (error) {
-      return console.log('An error occurred.', error);
-    }
   };
 }
