@@ -33,17 +33,15 @@ export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const formRef = useRef(null);
   const history = useHistory();
   const login = useLogin();
   async function handleLogin() {
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
     const isLoggedIn = await login({ email, password });
     if (isLoggedIn) {
-      setEmail('');
-      emailRef.current.value = '';
-      setPassword('');
-      passwordRef.current.value = '';
       history.push('/dashboard');
     } else {
       setIsError(true);
@@ -51,7 +49,7 @@ export default function LoginForm() {
   }
   return (
     <>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} ref={formRef}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -64,7 +62,6 @@ export default function LoginForm() {
           autoFocus
           type="email"
           onChange={(e) => setEmail(e.target.value)}
-          inputRef={emailRef}
           error={isError}
         />
         <TextField
@@ -78,7 +75,6 @@ export default function LoginForm() {
           id="password"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
-          inputRef={passwordRef}
           error={isError}
         />
         <FormControlLabel
