@@ -9,10 +9,11 @@ export default function useSignup() {
     const response = await signup(data);
     if (response.ok) {
       dispatch(signupSuccess());
-      return true;
+      return { isSignedUp: true, responseErrors: {} };
     }
     dispatch(signupFailure());
-    return false;
+    const json = await response.json();
+    return { isSignedUp: false, responseErrors: json.errors || {} };
   };
   return createUser;
 }
