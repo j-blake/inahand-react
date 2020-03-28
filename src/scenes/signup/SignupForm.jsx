@@ -77,6 +77,7 @@ export default function LoginForm() {
           name="password"
           label="Password"
           type="password"
+          inputProps={{ minLength: 20, maxLength: 40 }}
           id="password"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
@@ -91,6 +92,11 @@ export default function LoginForm() {
           label="First Name"
           name="first_name"
           autoComplete="firstnamae"
+          inputProps={{
+            maxLength: 50,
+            pattern: '[a-zA-Z\'.-]+',
+            title: 'Letters, periods, apostrophes, and dashes are accepted',
+          }}
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
           error={errors.firstName !== undefined}
@@ -104,6 +110,11 @@ export default function LoginForm() {
           label="Last Name"
           name="last_name"
           autoComplete="lastName"
+          inputProps={{
+            maxLength: 50,
+            pattern: '[a-zA-Z\'.-]+',
+            title: 'Letters, periods, apostrophes, and dashes are accepted',
+          }}
           type="text"
           onChange={(e) => setLastName(e.target.value)}
           error={errors.lastName !== undefined}
