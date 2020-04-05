@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
@@ -12,9 +13,17 @@ import {
   FETCH_CATEGORIES_FAILURE,
 } from '../actions/categoryActions';
 
+function findCategoriesToDelete(categoryId, categoryList) {
+  const ids = _.keys(_.pickBy(categoryList, (cat) => cat.parent === categoryId));
+  const deletedIds = [
+    categoryId,
+    ...(_.reduce(ids, (acc, id) => [...acc, ...findCategoriesToDelete(id, categoryList)], []))];
+  return deletedIds;
+}
+
 function recursiveDeleteCategories(categoryId, categoriesFromState) {
-  const categoryList = { ...categoriesFromState };
-  delete categoryList[categoryId];
+  const ids = findCategoriesToDelete(categoryId, categoriesFromState);
+  const categoryList = _.omit(categoriesFromState, ids);
   return categoryList;
 }
 

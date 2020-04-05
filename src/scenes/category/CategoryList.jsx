@@ -37,17 +37,17 @@ export default function CategoryList() {
     <>
       <List>
         {categories.map((category) => (
-          <Paper className={classes.root} key={category._id}>
+          <Paper className={classes.root} key={category.id}>
             <ListItem
               className={classes.paper}
               button
-              onClick={() => dispatch(selectCategory(category._id))}
+              onClick={() => dispatch(selectCategory(category.id))}
             >
               <ListItemText>
                 <Typography variant="body1">{category.name}</Typography>
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={() => deleteCategory(category._id)} aria-label="Delete">
+                <IconButton onClick={() => deleteCategory(category.id)} aria-label="Delete">
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>

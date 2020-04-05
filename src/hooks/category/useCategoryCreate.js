@@ -6,9 +6,7 @@ import addCategory from '../../data/services/category/addCategory';
 const handleFailedResponse = (dispatch) => dispatch(requestFailed());
 
 const normalizeDatum = (originalData) => {
-  const category = new schema.Entity('category', {}, {
-    idAttribute: '_id',
-  });
+  const category = new schema.Entity('category', {}, { idAttribute: 'id' });
   const categorySchema = { category };
   const normalizedData = normalize(originalData, categorySchema);
   return normalizedData;
