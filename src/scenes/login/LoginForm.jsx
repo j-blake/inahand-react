@@ -32,23 +32,24 @@ export default function LoginForm() {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const [isError, setIsError] = useState(false);
+  const formRef = useRef(null);
   const history = useHistory();
   const login = useLogin();
-  function handleLogin() {
-    setEmail('');
-    emailRef.current.value = '';
-    setPassword('');
-    passwordRef.current.value = '';
-    const isLoggedIn = login({ email, password });
+  async function handleLogin() {
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
+    const isLoggedIn = await login({ email, password });
     if (isLoggedIn) {
       history.push('/dashboard');
+    } else {
+      setIsError(true);
     }
   }
   return (
     <>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} ref={formRef}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -61,7 +62,7 @@ export default function LoginForm() {
           autoFocus
           type="email"
           onChange={(e) => setEmail(e.target.value)}
-          inputRef={emailRef}
+          error={isError}
         />
         <TextField
           variant="outlined"
@@ -74,7 +75,7 @@ export default function LoginForm() {
           id="password"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
-          inputRef={passwordRef}
+          error={isError}
         />
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}

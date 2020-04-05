@@ -31,22 +31,15 @@ export default function LoginForm() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
+  const [errors, setErrors] = useState({});
+  const formRef = useRef(null);
   const history = useHistory();
   const signup = useSignup();
-  function handleLogin() {
-    setEmail('');
-    emailRef.current.value = '';
-    setPassword('');
-    passwordRef.current.value = '';
-    setFirstName('');
-    firstNameRef.current.value = '';
-    setLastName('');
-    lastNameRef.current.value = '';
-    const isSignedUp = signup({
+  async function handleSignup() {
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
+    const { isSignedUp, responseErrors } = await signup({
       email,
       password,
       firstName,
@@ -54,11 +47,13 @@ export default function LoginForm() {
     });
     if (isSignedUp) {
       history.push('/');
+    } else {
+      setErrors(responseErrors);
     }
   }
   return (
     <>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} ref={formRef}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -71,33 +66,8 @@ export default function LoginForm() {
           autoFocus
           type="email"
           onChange={(e) => setEmail(e.target.value)}
-          inputRef={emailRef}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="firstName"
-          label="First Name"
-          name="first_name"
-          autoComplete="firstnamae"
-          type="text"
-          onChange={(e) => setFirstName(e.target.value)}
-          inputRef={firstNameRef}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="lastName"
-          label="Last Name"
-          name="last_name"
-          autoComplete="lastName"
-          type="text"
-          onChange={(e) => setLastName(e.target.value)}
-          inputRef={lastNameRef}
+          error={errors.email !== undefined}
+          helperText={errors.email || undefined}
         />
         <TextField
           variant="outlined"
@@ -107,10 +77,48 @@ export default function LoginForm() {
           name="password"
           label="Password"
           type="password"
+          inputProps={{ minLength: 20, maxLength: 40 }}
           id="password"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
-          inputRef={passwordRef}
+          error={errors.password !== undefined}
+          helperText={errors.password || undefined}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="firstName"
+          label="First Name"
+          name="first_name"
+          autoComplete="firstnamae"
+          inputProps={{
+            maxLength: 50,
+            pattern: '[a-zA-Z\'.-]+',
+            title: 'Letters, periods, apostrophes, and dashes are accepted',
+          }}
+          type="text"
+          onChange={(e) => setFirstName(e.target.value)}
+          error={errors.firstName !== undefined}
+          helperText={errors.firstName || undefined}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="lastName"
+          label="Last Name"
+          name="last_name"
+          autoComplete="lastName"
+          inputProps={{
+            maxLength: 50,
+            pattern: '[a-zA-Z\'.-]+',
+            title: 'Letters, periods, apostrophes, and dashes are accepted',
+          }}
+          type="text"
+          onChange={(e) => setLastName(e.target.value)}
+          error={errors.lastName !== undefined}
+          helperText={errors.lastName || undefined}
         />
         <Button
           type="button"
@@ -118,7 +126,7 @@ export default function LoginForm() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={() => handleLogin()}
+          onClick={() => handleSignup()}
         >
           Create your account
         </Button>
