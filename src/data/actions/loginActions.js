@@ -6,8 +6,8 @@ export function loginRequest() {
   return { type: LOGIN_REQUEST };
 }
 
-export function loginSuccess(token) {
-  return { type: LOGIN_SUCCESS, token };
+export function loginSuccess() {
+  return { type: LOGIN_SUCCESS };
 }
 
 export function loginFailure() {
