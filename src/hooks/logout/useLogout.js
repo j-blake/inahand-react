@@ -12,7 +12,6 @@ export default function useLogout() {
     } else {
       dispatch(logoutFailure());
     }
-    localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
     window.location.href = '/';
   };
   return logoutUser;

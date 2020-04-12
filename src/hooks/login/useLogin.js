@@ -8,9 +8,7 @@ export default function useLogin() {
     dispatch(loginRequest());
     const response = await login(data);
     if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem(process.env.REACT_APP_JWT_TOKEN, token);
-      dispatch(loginSuccess(token));
+      dispatch(loginSuccess());
       return true;
     }
     dispatch(loginFailure());
