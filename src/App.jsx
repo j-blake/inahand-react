@@ -1,28 +1,32 @@
-import React from 'react';
-import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
-import './App.css';
-import { Provider } from 'react-redux';
-import store from './data/store';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import styles from './styles';
-import Dashboard from './Dashboard';
+import AppBar from './components/AppBar';
+import MenuDrawer from './components/MenuDrawer';
+import Main from './components/Main';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: blue,
-    secondary: red,
-    type: 'dark',
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
   },
-});
+}));
 
-const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <Provider store={store}>
-      <Dashboard />
-    </Provider>
-  </MuiThemeProvider>
-);
-
-export default withStyles(styles)(App);
+export default function App() {
+  const classes = useStyles();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        handleDrawerOpen={() => setIsDrawerOpen(true)}
+        open={isDrawerOpen}
+      />
+      <MenuDrawer
+        handleDrawerClose={() => setIsDrawerOpen(false)}
+        open={isDrawerOpen}
+      />
+      <Main />
+    </div>
+  );
+}

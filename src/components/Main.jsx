@@ -1,19 +1,29 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 
-import DashboardComponent from './components/dashboard/Dashboard';
-import Accounts from './scenes/account/Account';
-import Transactions from './components/transactions/Transactions';
-import Users from './components/users/Users';
-import Settings from './components/settings/Settings';
-import Categories from './scenes/category/Category';
-import Login from './scenes/login/Login';
-import Signup from './scenes/signup/Signup';
+import DashboardComponent from '../scenes/dashboard/Dashboard';
+import Accounts from '../scenes/account/Account';
+import Transactions from '../scenes/transactions/Transactions';
+import Users from '../scenes/users/Users';
+import Settings from '../scenes/settings/Settings';
+import Categories from '../scenes/category/Category';
+import Login from '../scenes/login/Login';
+import Signup from '../scenes/signup/Signup';
 
-export default function Main(props) {
-  const { classes } = props;
+const useStyles = makeStyles((theme) => ({
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    height: '100vh',
+    overflow: 'auto',
+  },
+}));
+
+export default function Main() {
+  const classes = useStyles();
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated) !== false;
   return (
     <main className={classes.content}>
@@ -29,8 +39,3 @@ export default function Main(props) {
     </main>
   );
 }
-
-Main.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-};

@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom';
 
-import useLogout from './hooks/logout/useLogout';
+import useLogout from '../hooks/logout/useLogout';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
