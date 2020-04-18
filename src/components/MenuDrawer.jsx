@@ -4,13 +4,10 @@ import classNames from 'classnames';
 import {
   Drawer,
   IconButton,
-  Divider,
-  List,
   makeStyles,
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import { mainListItems, secondaryListItems } from './listItems';
+import MenuList from './MenuList';
 
 const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
@@ -64,10 +61,7 @@ export default function MenuDrawer(props) {
           <ChevronLeftIcon />
         </IconButton>
       </div>
-      <Divider />
-      <List>{mainListItems}</List>
-      <Divider />
-      <List>{secondaryListItems}</List>
+      <MenuList />
     </Drawer>
   );
 }
