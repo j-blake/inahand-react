@@ -5,6 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from './components/AppBar';
 import MenuDrawer from './components/MenuDrawer';
 import Main from './components/Main';
+import Login from './scenes/login/Login';
+import useAuth from './hooks/auth/useAuth';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,9 +17,9 @@ const useStyles = makeStyles(() => ({
 export default function App() {
   const classes = useStyles();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
+  const isAuthenticated = useAuth();
+  const content = isAuthenticated ? (
+    <>
       <AppBar
         handleDrawerOpen={() => setIsDrawerOpen(true)}
         open={isDrawerOpen}
@@ -27,6 +29,12 @@ export default function App() {
         open={isDrawerOpen}
       />
       <Main />
+    </>
+  ) : <Login />;
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      {content}
     </div>
   );
 }
