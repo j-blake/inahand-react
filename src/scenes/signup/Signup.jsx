@@ -23,7 +23,7 @@ export default function Login() {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container maxWidth="xs">
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.icon} fontSize="large" />
           <Typography component="h1" variant="h5">

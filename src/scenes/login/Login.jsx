@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
@@ -26,7 +26,7 @@ export default function Login() {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
