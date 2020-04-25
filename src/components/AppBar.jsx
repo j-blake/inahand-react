@@ -8,9 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitIcon from '@material-ui/icons/ExitToApp';
-import { Link } from 'react-router-dom';
 
-import useLogout from './hooks/logout/useLogout';
+import useLogout from '../hooks/auth/useLogout';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -72,17 +71,6 @@ export default function AppBar(props) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          <Link to="/" className={classNames(classes.link)}>
-            Inahand
-          </Link>
-        </Typography>
         <IconButton
           color="inherit"
           aria-label="Logout"

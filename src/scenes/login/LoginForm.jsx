@@ -1,12 +1,10 @@
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React, { useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import useLogin from '../../hooks/login/useLogin';
+import useLogin from '../../hooks/auth/useLogin';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,10 +74,6 @@ export default function LoginForm() {
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
           error={isError}
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
         />
         <Button
           type="button"
