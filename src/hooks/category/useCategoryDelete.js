@@ -6,19 +6,14 @@ import {
 } from '../../data/actions/categoryActions';
 import deleteCategory from '../../data/services/category/deleteCategory';
 
-const handleFailedResponse = (dispatch) => dispatch(requestFailed());
-
 export default function useCategoryDelete() {
   const dispatch = useDispatch();
   return async (categoryId) => {
     dispatch(requestDeleteCategory(categoryId));
     try {
-      const response = await deleteCategory(categoryId);
-      if (response.ok) {
-        return dispatch(deleteCategorySuccess(categoryId));
-      }
-      return (handleFailedResponse(dispatch));
-    } catch (error) {
+      await deleteCategory(categoryId);
+      return dispatch(deleteCategorySuccess(categoryId));
+    } catch (e) {
       return dispatch(requestFailed());
     }
   };

@@ -6,14 +6,14 @@ export default function useSignup() {
   const dispatch = useDispatch();
   const createUser = async (data) => {
     dispatch(signupRequest());
-    const response = await signup(data);
-    if (response.ok) {
+    try {
+      await signup(data);
       dispatch(signupSuccess());
       return { isSignedUp: true, responseErrors: {} };
+    } catch (e) {
+      dispatch(signupFailure());
+      return { isSignedUp: false, responseErrors: e.response.errors || {} };
     }
-    dispatch(signupFailure());
-    const json = await response.json();
-    return { isSignedUp: false, responseErrors: json.errors || {} };
   };
   return createUser;
 }

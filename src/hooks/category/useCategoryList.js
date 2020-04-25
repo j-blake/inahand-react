@@ -4,8 +4,6 @@ import { normalize, schema } from 'normalizr';
 import { requestCategories, receiveCategories, requestFailed } from '../../data/actions/categoryActions';
 import fetchCategoriesData from '../../data/services/category/fetchCategories';
 
-const handleFailedResponse = (dispatch) => dispatch(requestFailed());
-
 const normalizeData = (originalData) => {
   const categorySchema = new schema.Entity('categories');
   const categoryListSchema = { categories: [categorySchema] };
@@ -21,13 +19,9 @@ export default function useCategory() {
       dispatch(requestCategories());
       try {
         const response = await fetchCategoriesData();
-        if (response.ok) {
-          const json = await response.json();
-          const data = normalizeData(json);
-          return dispatch(receiveCategories(data.entities || {}));
-        }
-        return handleFailedResponse(dispatch);
-      } catch (error) {
+        const data = normalizeData(response.data);
+        return dispatch(receiveCategories(data.entities || {}));
+      } catch (e) {
         return dispatch(requestFailed());
       }
     }
