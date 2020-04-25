@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
   const classes = useStyles();
-  const isAuthenticated = useSelector((state) => state.login.isAuthenticated) !== false;
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated) !== false;
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />

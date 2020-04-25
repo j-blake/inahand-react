@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 
-import useLogout from '../hooks/logout/useLogout';
+import useLogout from '../hooks/auth/useLogout';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({

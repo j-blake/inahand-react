@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { loginRequest, loginSuccess, loginFailure } from '../../data/actions/loginActions';
-import login from '../../data/services/login/login';
+import { loginRequest, loginSuccess, loginFailure } from '../../data/actions/authenticationActions';
+import login from '../../data/services/authentication/login';
 
 export default function useLogin() {
   const dispatch = useDispatch();

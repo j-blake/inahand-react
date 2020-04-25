@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React, { useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import useLogin from '../../hooks/login/useLogin';
+import useLogin from '../../hooks/auth/useLogin';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

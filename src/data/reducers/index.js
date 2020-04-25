@@ -1,12 +1,19 @@
 import { combineReducers } from 'redux';
 import account from './accountReducer';
 import category from './categoryReducer';
-import login from './loginReducer';
-import logout from './logoutReducer';
+import authentication from './authenticationReducer';
 
-export default combineReducers({
+// todo https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store
+
+const appReducer = combineReducers({
   account,
   category,
-  login,
-  logout,
+  authentication,
 });
+
+const rootReducer = (state, action) => {
+  const validState = ['LOGOUT_SUCCESS', 'LOGOUT_FAILURE'].includes(action.type) ? undefined : state;
+  return appReducer(validState, action);
+};
+
+export default rootReducer;

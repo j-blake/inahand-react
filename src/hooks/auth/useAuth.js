@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginRequest, loginSuccess, loginFailure } from '../../data/actions/loginActions';
+import { loginRequest, loginSuccess, loginFailure } from '../../data/actions/authenticationActions';
 import status from '../../data/services/authentication/status';
 
 export default function useAuth() {
@@ -20,5 +20,5 @@ export default function useAuth() {
     }
     checkAuthentication();
   }, [dispatch]);
-  return useSelector((state) => state.login.isAuthenticated);
+  return useSelector((state) => state.authentication.isAuthenticated);
 }
