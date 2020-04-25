@@ -6,10 +6,10 @@ export default function useLogout() {
   const dispatch = useDispatch();
   const logoutUser = async (data) => {
     dispatch(logoutRequest());
-    const response = await logout(data);
-    if (response.ok) {
+    try {
+      await logout(data);
       dispatch(logoutSuccess());
-    } else {
+    } catch (e) {
       dispatch(logoutFailure());
     }
     window.location.href = '/';

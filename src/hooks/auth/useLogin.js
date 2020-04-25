@@ -6,13 +6,14 @@ export default function useLogin() {
   const dispatch = useDispatch();
   const loginUser = async (data) => {
     dispatch(loginRequest());
-    const response = await login(data);
-    if (response.ok) {
+    try {
+      await login(data);
       dispatch(loginSuccess());
       return true;
+    } catch (e) {
+      dispatch(loginFailure());
+      return false;
     }
-    dispatch(loginFailure());
-    return false;
   };
   return loginUser;
 }

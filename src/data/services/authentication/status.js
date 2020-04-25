@@ -1,7 +1,3 @@
-export default async () => fetch(`${process.env.REACT_APP_API_URL}/auth/check`, {
-  method: 'get',
-  credentials: 'include',
-  headers: {
-    Accept: 'application/json',
-  },
-});
+import api from '../api';
+
+export default async () => api.get('/auth/check');

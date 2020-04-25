@@ -9,14 +9,11 @@ export default function useAuth() {
     async function checkAuthentication() {
       dispatch(loginRequest());
       try {
-        const response = await status();
-        if (response.ok) {
-          return dispatch(loginSuccess());
-        }
+        await status();
+        return dispatch(loginSuccess());
       } catch (e) {
-        // log errors
+        return dispatch(loginFailure());
       }
-      return dispatch(loginFailure());
     }
     checkAuthentication();
   }, [dispatch]);
