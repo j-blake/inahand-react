@@ -3,8 +3,6 @@ import { normalize, schema } from 'normalizr';
 import { requestAddNewCategory, receiveAddNewCategory, requestFailed } from '../../data/actions/categoryActions';
 import addCategory from '../../data/services/category/addCategory';
 
-const handleFailedResponse = (dispatch) => dispatch(requestFailed());
-
 const normalizeDatum = (originalData) => {
   const category = new schema.Entity('category', {}, { idAttribute: 'id' });
   const categorySchema = { category };
@@ -18,11 +16,8 @@ export default function useCategoryCreate() {
     dispatch(requestAddNewCategory(data));
     try {
       const response = await addCategory(data);
-      if (response.ok) {
-        const json = normalizeDatum(await response.json());
-        return dispatch(receiveAddNewCategory(json.entities));
-      }
-      return (handleFailedResponse(dispatch));
+      const json = normalizeDatum(response.data);
+      return dispatch(receiveAddNewCategory(json.entities));
     } catch (error) {
       return dispatch(requestFailed());
     }

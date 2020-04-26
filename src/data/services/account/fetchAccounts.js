@@ -1,7 +1,3 @@
-export default async () => {
-  const options = {
-    method: 'get',
-    credentials: 'include',
-  };
-  return fetch(`${process.env.REACT_APP_API_URL}/accounts`, options);
-};
+import api from '../api';
+
+export default async () => api.get('/accounts');

@@ -1,3 +1,5 @@
+import api from '../api';
+
 export default async (data) => {
   const {
     firstName,
@@ -5,17 +7,10 @@ export default async (data) => {
     email,
     password,
   } = data;
-  return fetch(`${process.env.REACT_APP_API_URL}/auth/create`, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({
-      email,
-      password,
-      firstName,
-      lastName,
-    }),
-  });
+  return api.post('/auth/create', JSON.stringify({
+    email,
+    password,
+    firstName,
+    lastName,
+  }));
 };
