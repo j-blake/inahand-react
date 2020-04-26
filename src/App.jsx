@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppBar from './components/AppBar';
 import MenuDrawer from './components/MenuDrawer';
@@ -33,7 +32,6 @@ export default function App() {
   ) : <Login />;
   return (
     <div className={classes.root}>
-      <CssBaseline />
       {content}
     </div>
   );

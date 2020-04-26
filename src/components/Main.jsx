@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 
@@ -24,17 +23,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
   const classes = useStyles();
-  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated) !== false;
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
       <Route exact path="/" component={Login} />
-      <Route path="/dashboard" component={isAuthenticated ? DashboardComponent : Login} />
-      <Route path="/accounts" component={isAuthenticated ? Accounts : Login} />
-      <Route path="/transactions" component={isAuthenticated ? Transactions : Login} />
-      <Route path="/users" component={isAuthenticated ? Users : Login} />
-      <Route path="/categories" component={isAuthenticated ? Categories : Login} />
-      <Route path="/settings" component={isAuthenticated ? Settings : Login} />
+      <Route path="/dashboard" component={DashboardComponent} />
+      <Route path="/accounts" component={Accounts} />
+      <Route path="/transactions" component={Transactions} />
+      <Route path="/users" component={Users} />
+      <Route path="/categories" component={Categories} />
+      <Route path="/settings" component={Settings} />
       <Route path="/sign-up" component={Signup} />
     </main>
   );
