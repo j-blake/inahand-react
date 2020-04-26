@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
     'text-decoration': 'none',
   },
+  button: {
+    color: 'inherit',
+  },
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
@@ -44,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
+  },
+  flexContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 }));
 
@@ -60,32 +68,34 @@ export default function AppBar(props) {
       className={classNames(classes.appBar, open && classes.appBarShift)}
     >
       <Toolbar disableGutters={!open} className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          aria-label="Open drawer"
-          onClick={handleDrawerOpen}
-          className={classNames(
-            classes.menuButton,
-            open && classes.menuButtonHidden,
-          )}
-        >
-          <MenuIcon />
-        </IconButton>
-        <IconButton
-          color="inherit"
-          aria-label="Logout"
-          onClick={() => logout()}
-        >
-          <ExitIcon />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="inherit"
-            noWrap
+        <div className={classes.flexContainer}>
+          <IconButton
+            aria-label="Open drawer"
+            onClick={handleDrawerOpen}
+            className={classNames(
+              classes.button,
+              classes.menuButton,
+              open && classes.menuButtonHidden,
+            )}
           >
-            LOGOUT
-          </Typography>
-        </IconButton>
+            <MenuIcon />
+          </IconButton>
+          <IconButton
+            className={classes.button}
+            aria-label="Logout"
+            onClick={() => logout()}
+          >
+            <ExitIcon />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="inherit"
+              noWrap
+            >
+              LOGOUT
+            </Typography>
+          </IconButton>
+        </div>
       </Toolbar>
     </MaterialAppBar>
   );
